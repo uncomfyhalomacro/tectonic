@@ -494,7 +494,7 @@ getGraphiteFeatureSettingCode(XeTeXLayoutEngine engine, uint32_t featureID, uint
     return rval;
 }
 
-#define tag_from_lang(x) hb_tag_from_string(hb_language_to_string(x), strlen(hb_language_to_string(x)))
+#define hb_ot_tag_from_language(x) hb_tag_from_string(hb_language_to_string(x), strlen(hb_language_to_string(x)))
 
 uint32_t
 getGraphiteFeatureDefaultSetting(XeTeXLayoutEngine engine, uint32_t featureID)
@@ -506,7 +506,7 @@ getGraphiteFeatureDefaultSetting(XeTeXLayoutEngine engine, uint32_t featureID)
 
     if (grFace != NULL) {
         const gr_feature_ref* feature = gr_face_find_fref(grFace, featureID);
-        gr_feature_val *featureValues = gr_face_featureval_for_lang (grFace, tag_from_lang(engine->language));
+        gr_feature_val *featureValues = gr_face_featureval_for_lang (grFace, hb_ot_tag_from_language(engine->language));
 
         rval = gr_fref_feature_value(feature, featureValues);
     }
@@ -1023,7 +1023,7 @@ initGraphiteBreaking(XeTeXLayoutEngine engine, const uint16_t* txtPtr, int txtLe
             grPrevSlot = NULL;
         }
 
-        gr_feature_val *grFeatureValues = gr_face_featureval_for_lang (grFace, tag_from_lang(engine->language));
+        gr_feature_val *grFeatureValues = gr_face_featureval_for_lang (grFace, hb_ot_tag_from_language(engine->language));
 
         int nFeatures = engine->nFeatures;
         hb_feature_t *features =  engine->features;
